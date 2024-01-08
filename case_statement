@@ -1,0 +1,43 @@
+
+create table payment(
+	 
+	 customer_id int,
+	 amount bigint ,
+	 mode varchar,
+	 payment_date date
+ 
+ );
+ 
+ insert into payment(customer_id,amount,mode,payment_date)
+ values
+ (1,60,'Cash','2020-09-24'),
+ (8,110,'Cash','2021-01-26'),
+ (10,70,'mobile payment','2021-02-28'),
+ (11,80,'Cash','2021-03-01'),
+ (2,500,'Credit Card','2020-04-27');
+ 
+ select* from payment;
+ 
+ 
+
+---case statement in sql
+
+--syntax
+--case
+--when conditon1 then result1
+--when conditon2 then result2
+--when conditon3 then result3
+--else other_result
+--end;
+
+select* from payment;
+
+
+select customer_id,amount,
+case
+when amount > 100 then 'Expensive product'
+when amount =100 then 'Moderate product'
+else 'Inexpensive product'
+end as productStatus
+from payment;
+	 
