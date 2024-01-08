@@ -1,0 +1,111 @@
+--- in join i will always try to find out the column which are common in the both table
+
+create table employee(
+	emp_id varchar,
+	emp_name varchar,
+	salary int ,
+	dept_id varchar,
+	manager_id varchar
+);
+
+insert into employee (emp_id,emp_name,salary,dept_id,manager_id)
+
+values
+
+('E1','Rahul',15000,'D1','M1'),
+('E2','Manoj',15000,'D1','M1'),
+('E3','James',55000,'D2','M2'),
+('E4','Michael',25000,'D2','M2'),
+('E5','Ali',20000,'D10','M3'),
+('E6','Robin',35000,'D10','M3');
+
+create table department(
+	dept_id varchar,
+	dept_name varchar
+);
+
+insert into department(dept_id,dept_name)
+
+values 
+('D1','IT'),
+('D2','HR'),
+('D3','Finance'),
+('D4','Admin');
+
+create table manager(
+	
+	manager_id varchar,
+	manager_name varchar,
+	dept_id varchar
+
+);
+
+insert into manager(manager_id,manager_name,dept_id)
+values
+('M1','Prem','D3'),
+('M2','Shripadh','D4'),
+('M3','Nick','D1'),
+('M4','Cory','D1');
+
+create table projects(
+	project_id varchar,
+	project_name varchar,
+	temp_member_id varchar
+
+);
+ALTER table projects 
+rename  temp_member_id to team_member_id;
+
+insert into projects(project_id,project_name,team_member_id)
+values
+('P1','Data Migration','E1'),
+('P1','Data Migration','E2'),
+('P1','Data Migration','M3'),
+('P2','ETL Tool','E1'),
+('P2','ETL Tool','M4');
+
+select* from projects;
+
+--fetch the employee name and the department name they belong to.
+-- inner join/ join are same
+--- inner join will try to fetch the those records which are present in the both records
+
+select e.emp_name,d.dept_name  (this is on which column i want to join)
+from employee e 
+inner join 
+department d 
+on e.dept_id = d.dept_id;(this part is basically the condition on which i want ot join two tables)
+
+--- left join
+-----fetch all the employee name and their department name they belong to.
+--- in left join the left side table will give the priority and it will become the main table
+-- left join=inner join + any additional records in the left table
+
+select e.emp_name,d.dept_name  
+from employee e 
+left join 
+department d 
+on e.dept_id = d.dept_id;
+
+--- same as the left join just the right table will be given the priority
+-- right join =inner join + any additioinal records in the right table
+
+select e.emp_name,d.dept_name  
+from employee e 
+right join 
+department d 
+on e.dept_id = d.dept_id;
+
+
+----fetch details of all emp their manager their department and the project they work on
+
+select e.emp_name,d.dept_name , m.manager_name,p.project_name
+from employee e 
+left join 
+department d 
+on e.dept_id = d.dept_id
+inner join manager m on m.manager_id = e.manager_id
+join projects p on p.team_member_id = e. emp_id;
+
+
+
