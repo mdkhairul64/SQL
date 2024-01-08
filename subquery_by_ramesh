@@ -1,0 +1,84 @@
+--- A subquery or inner query or a nested query allows us to create complex query on the output of another query 
+-- Sub qury syntax involves two select statements
+-- syntax
+--
+Select column_name(s)
+From table_name
+where column_name operator
+ (select column_name from table_name )
+ ---
+ create table payment(
+	 
+	 customer_id int,
+	 amount bigint ,
+	 mode varchar,
+	 payment_date date
+ 
+ );
+ insert into payment(customer_id,amount,mode,payment_date)
+ values
+ (1,60,'Cash','2020-09-24'),
+ (8,110,'Cash','2021-01-26'),
+ (10,70,'mobile payment','2021-02-28'),
+ (11,80,'Cash','2021-03-01'),
+ (2,500,'Credit Card','2020-04-27');
+ 
+ select* from payment;
+ 
+ ---question using subquery
+ 
+ ---find the details of the customers whose payment amount is more than the average of total amount paid by all customers
+ 
+ -- divide the question into two parts
+ 1. find the average amount 
+ 2.filter the customers whose amount > average amount
+ 
+ select*
+ from payment
+ where amount > (select avg(amount) from payment)
+ 
+ --- in the bracket the query is called inner query at first the query is run then the outer query will be run
+ 
+ 
+ ---another table customer
+ 
+ create table customer(
+ 	customer_id int,
+	 first_name varchar,
+	 last_name varchar,
+	 address_id int 
+ );
+ 
+ 
+ insert into customer(customer_id,first_name,last_name,address_id)
+ 
+ values 
+ (1,'Mary','Smith',5),
+ (3,'Linda','Willams',7),
+ (4,'Barbara','Jones',8),
+ (2,'Madan','Mohan',6);
+ 
+ select* from customer;
+ 
+ --subquery using in operator
+ 
+ select customer_id,amount,mode
+ from payment
+ where customer_id in (select customer_id from customer)
+ 
+ 
+ --subquery using exists operator
+ 
+ --- this is alternatice of join sql
+ 
+ 
+ select first_name,last_name
+ from customer c
+ 
+ where exists (select customer_id,amount
+			  from payment p
+			  where p.customer_id=c.customer_id
+			  and amount>100)
+ 
+
+  
