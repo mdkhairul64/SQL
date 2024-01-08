@@ -1,0 +1,61 @@
+---- group by statement group rows that  have the same values into summary rows
+
+-- syntax 
+--- select column_name
+from table 
+--grooup by column name;
+
+create table payment(
+	 
+	 customer_id int,
+	 amount bigint ,
+	 mode varchar,
+	 payment_date date
+ 
+ );
+ 
+ insert into payment(customer_id,amount,mode,payment_date)
+ values
+ (1,60,'Cash','2020-09-24'),
+ (8,110,'Cash','2021-01-26'),
+ (10,70,'mobile payment','2021-02-28'),
+ (11,80,'Cash','2021-03-01'),
+ (2,500,'Credit Card','2020-04-27');
+ 
+ select* from payment;
+ 
+ 
+ select mode,sum(amount) as total
+ from payment
+ group by mode
+ 
+ order by total asc
+
+
+---having clause
+
+--- the having clause is used to apply a filter on the result of group by based on the 
+--- specified conditon
+--- the where clause places conditons on the  selected coulmns,whereas the  having 
+-- clause places conditions on groups created by the group by clause
+
+--- we will always use having conditon with group by
+
+--- where clause is always with the select conditon
+
+-- syntax
+
+
+--select column_name(s)
+--from table_name
+--where condition(s)
+--group by column_name(s)
+--having condition(s)
+
+select mode,count(amount) as total
+from payment
+group by mode
+having count(amount)>=1 and count (amount) <4  --- here i can usde multiple conditon
+--- having is used below the group by
+order by total desc
+
