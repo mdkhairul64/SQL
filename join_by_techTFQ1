@@ -209,4 +209,65 @@ on child.parent_id = parent.member_id;
 
 
 
+-----union and union all
+
+
+---- union in sql
+--- union is used to combine or concatenate the results of two or more select statementntss w
+--- without returning any duplicate rows and keeps unique records
+
+--- to do union we need to maintain
+--1.the same number of columns selected and expression
+--2. the same data type and 
+---3. have them in the same order
+
+--- union all is same as union but there the duplicate value is allowed
+
+create table cusA(
+	cust_name varchar,
+	cust_amount int
+);
+
+insert into cusA(cust_name,cust_amount)
+values
+('Madan Mohan',2100),
+('Gopi Nath','1200'),
+('Govind Dev',5000);
+
+create table cusB(
+	cust_name varchar,
+	cust_amount int
+);
+
+select* from cusA;
+
+insert into cusB(cust_name,cust_amount)
+values
+('Gopal Bhat',1500),
+('Madan Mohan','2100');
+
+select* from cusB;
+
+
+select cust_name,cust_amount
+from cusA
+union all
+select cust_name,cust_amount
+from cusB;
+
+
+select cust_name,cust_amount
+from cusA
+union 
+select cust_name,cust_amount
+from cusB;
+
+
+
+
+
+
+
+
+
 
